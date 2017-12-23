@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Stack layout 堆叠图 | leiyu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="堆叠图与条形图非常相似，然而堆叠图中存在矩形的堆叠，可以划分为不同的层。如果数据存在子分类，且各分类之和有意义，那么我们就可以用堆叠图描述数据 创建堆叠图的方式是直接调用d3中的stack构造函数，该函数返回包含一个对象和函数，通常我们在调用stack函数时，须指定layer要表现的数据，同时也要指定矩形的x、y坐标,y值可以理解为layer(层)的厚度; 12345678910111213141">
+<meta name="keywords" content="D3.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stack layout 堆叠图">
+<meta property="og:url" content="http://yoursite.com/2015/08/17/stack-d3/index.html">
+<meta property="og:site_name" content="leiyu">
+<meta property="og:description" content="堆叠图与条形图非常相似，然而堆叠图中存在矩形的堆叠，可以划分为不同的层。如果数据存在子分类，且各分类之和有意义，那么我们就可以用堆叠图描述数据 创建堆叠图的方式是直接调用d3中的stack构造函数，该函数返回包含一个对象和函数，通常我们在调用stack函数时，须指定layer要表现的数据，同时也要指定矩形的x、y坐标,y值可以理解为layer(层)的厚度; 12345678910111213141">
+<meta property="og:image" content="http://yoursite.com/images/study/2015-08-18-01.jpg">
+<meta property="og:updated_time" content="2017-12-23T08:14:58.488Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Stack layout 堆叠图">
+<meta name="twitter:description" content="堆叠图与条形图非常相似，然而堆叠图中存在矩形的堆叠，可以划分为不同的层。如果数据存在子分类，且各分类之和有意义，那么我们就可以用堆叠图描述数据 创建堆叠图的方式是直接调用d3中的stack构造函数，该函数返回包含一个对象和函数，通常我们在调用stack函数时，须指定layer要表现的数据，同时也要指定矩形的x、y坐标,y值可以理解为layer(层)的厚度; 12345678910111213141">
+<meta name="twitter:image" content="http://yoursite.com/images/study/2015-08-18-01.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="leiyu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">leiyu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-stack-d3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/17/stack-d3/" class="article-date">
+  <time datetime="2015-08-17T15:51:50.000Z" itemprop="datePublished">2015-08-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Stack layout 堆叠图
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/images/study/2015-08-18-01.jpg" alt=""><br>堆叠图与条形图非常相似，然而堆叠图中存在矩形的堆叠，可以划分为不同的层。如果数据<br>存在子分类，且各分类之和有意义，那么我们就可以用堆叠图描述数据</p>
+<p>创建堆叠图的方式是直接调用d3中的stack构造函数，该函数返回包含一个对象和函数，通<br>常我们在调用stack函数时，须指定layer要表现的数据，同时也要指定矩形的x、y坐标,y<br>值可以理解为layer(层)的厚度;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//2000-2010"内森杯" 热狗大胃王前三名成绩</span></span><br><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">&#123; <span class="attr">name</span>: <span class="string">"冠军"</span> , </span><br><span class="line">  sales: [	</span><br><span class="line">		  &#123; <span class="attr">year</span>:<span class="number">2000</span>, <span class="attr">profit</span>: <span class="number">25</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2001</span>, <span class="attr">profit</span>: <span class="number">50</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2002</span>, <span class="attr">profit</span>: <span class="number">50.5</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2003</span>, <span class="attr">profit</span>: <span class="number">44.5</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2004</span>, <span class="attr">profit</span>: <span class="number">53.5</span>&#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2005</span>, <span class="attr">profit</span>: <span class="number">49</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2006</span>, <span class="attr">profit</span>: <span class="number">54</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2007</span>, <span class="attr">profit</span>: <span class="number">66</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2008</span>, <span class="attr">profit</span>: <span class="number">59</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2009</span>, <span class="attr">profit</span>: <span class="number">68</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2010</span>, <span class="attr">profit</span>: <span class="number">54</span> &#125;</span><br><span class="line">				]&#125;,</span><br><span class="line">&#123; <span class="attr">name</span>: <span class="string">"亚军"</span> ,</span><br><span class="line">  sales: [	 </span><br><span class="line">      &#123; <span class="attr">year</span>:<span class="number">2000</span>, <span class="attr">profit</span>: <span class="number">24</span> &#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2001</span>, <span class="attr">profit</span>: <span class="number">31</span> &#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2002</span>, <span class="attr">profit</span>: <span class="number">26</span> &#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2003</span>, <span class="attr">profit</span>: <span class="number">30.5</span> &#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2004</span>, <span class="attr">profit</span>: <span class="number">38</span> &#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2005</span>, <span class="attr">profit</span>: <span class="number">37</span> &#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2006</span>, <span class="attr">profit</span>: <span class="number">52</span> &#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2007</span>, <span class="attr">profit</span>: <span class="number">63</span> &#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2008</span>, <span class="attr">profit</span>: <span class="number">59</span>&#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2009</span>, <span class="attr">profit</span>: <span class="number">64.5</span> &#125;,</span><br><span class="line"> 			&#123; <span class="attr">year</span>:<span class="number">2010</span>, <span class="attr">profit</span>: <span class="number">43</span> &#125;</span><br><span class="line">				]&#125;,</span><br><span class="line">&#123; <span class="attr">name</span>: <span class="string">"季军"</span> , </span><br><span class="line">  sales: [	</span><br><span class="line">      &#123; <span class="attr">year</span>:<span class="number">2000</span>, <span class="attr">profit</span>: <span class="number">22</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2001</span>, <span class="attr">profit</span>: <span class="number">23.5</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2002</span>, <span class="attr">profit</span>: <span class="number">25.5</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2003</span>, <span class="attr">profit</span>: <span class="number">29.5</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2004</span>, <span class="attr">profit</span>: <span class="number">32</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2005</span>, <span class="attr">profit</span>: <span class="number">32</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2006</span>, <span class="attr">profit</span>: <span class="number">37</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2007</span>, <span class="attr">profit</span>: <span class="number">49</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2008</span>, <span class="attr">profit</span>: <span class="number">42</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2009</span>, <span class="attr">profit</span>: <span class="number">55</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">year</span>:<span class="number">2010</span>, <span class="attr">profit</span>: <span class="number">37</span> &#125;</span><br><span class="line"></span><br><span class="line">      ]&#125;</span><br><span class="line">								];</span><br><span class="line"><span class="keyword">var</span> stack = d3.layout.stack()</span><br><span class="line">	 .values(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123; <span class="keyword">return</span> d.sales;&#125;) <span class="comment">//计算每个系列的基线堆叠柱形或区域图 </span></span><br><span class="line">	 .x(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123; <span class="keyword">return</span> d.year;&#125;)</span><br><span class="line">	 .y(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123; <span class="keyword">return</span> d.profit&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//绑定数据</span></span><br><span class="line"><span class="keyword">var</span> data = stack(dataset);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(data);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>values()中的参数即是为堆叠图的layer指定的数据，x，y指定了水平和垂直方向上所要表现的数据;通过上<br>面代码已经实现了在stack中绑定数据，要想看到具体的图形，只需为数据追加rect元素就可以了。类似这样:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> groups = svg.selectAll(<span class="string">'g'</span>)</span><br><span class="line">		  .data(data)</span><br><span class="line">		  .enter()</span><br><span class="line">		  .append(<span class="string">'g'</span>)</span><br><span class="line">		  .style(&#123;</span><br><span class="line">		  	<span class="string">"fill"</span>: <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>)</span>&#123; <span class="keyword">return</span> color(i);&#125;</span><br><span class="line">		  &#125;);</span><br><span class="line"><span class="comment">//创建rect元素</span></span><br><span class="line"><span class="keyword">var</span> rects = groups.selectAll(<span class="string">'rect'</span>)</span><br><span class="line">		  .data(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>)</span>&#123; <span class="keyword">return</span> d.sales;&#125;)</span><br><span class="line">		  .enter()</span><br><span class="line">		  .append(<span class="string">'rect'</span>)</span><br><span class="line">		  .attr(&#123;</span><br><span class="line">		  	<span class="string">'x'</span>:  ....,</span><br><span class="line">		  	<span class="string">'y'</span>:  ....,</span><br><span class="line">		  	<span class="string">'width'</span>: ....,</span><br><span class="line">		  	<span class="string">"height"</span>:  ....,</span><br><span class="line">		  	<span class="string">'transform'</span>: ....</span><br><span class="line">		  &#125;);</span><br></pre></td></tr></table></figure>
+<p>具体的例子可看<a href="http://codepen.io/yourlei/pen/ZGNbEQ" target="_blank" rel="noopener"><strong>这里</strong></a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/08/17/stack-d3/" data-id="cjbj3eljd000t1vjxpadtdacv" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/D3-js/">D3.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/08/22/mongodb-01-md/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          初识Mongodb
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/07/21/chord-layout-D3-js/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">D3学习笔记之弦图</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Canvas/">Canvas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chord-Layout/">Chord Layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cvs/">Cvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/D3-js/">D3.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-visual/">Data visual</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Journal/">Journal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongodb/">Mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NOSQL/">NOSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/R/">R</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sass/">Sass</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 13.33px;">CSS</a> <a href="/tags/Canvas/" style="font-size: 10px;">Canvas</a> <a href="/tags/Chord-Layout/" style="font-size: 10px;">Chord Layout</a> <a href="/tags/Cvs/" style="font-size: 10px;">Cvs</a> <a href="/tags/D3-js/" style="font-size: 20px;">D3.js</a> <a href="/tags/Data-visual/" style="font-size: 10px;">Data visual</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTML5/" style="font-size: 10px;">HTML5</a> <a href="/tags/Javascript/" style="font-size: 16.67px;">Javascript</a> <a href="/tags/Journal/" style="font-size: 10px;">Journal</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mongodb/" style="font-size: 13.33px;">Mongodb</a> <a href="/tags/NOSQL/" style="font-size: 10px;">NOSQL</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/Sass/" style="font-size: 13.33px;">Sass</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/26/scope-js-02/">重识javascript中的函数表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/22/R-01/">R笔记（一）Ｒ语言基础</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/13/sass-01/">Sass学习笔记(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/01/scope-js-01-md/">javascript中的函数作用域</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 leiyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

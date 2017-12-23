@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Mongodb ruby driver | leiyu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="版本说明：ruby 1.9.3，mongodb 2.4.6 准备工作ruby安装mongo驱动1gem install mongo 连接/创建数据库1client = Mongo::Client.new([127.0.0.1:27107], :database =&amp;gt; &apos;mydb&apos;) 删除数据库1client.database.drop CRUD操作创建集合1artists = client[">
+<meta name="keywords" content="Mongodb,ruby">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mongodb ruby driver">
+<meta property="og:url" content="http://yoursite.com/2015/08/23/ruby-mongodb-md/index.html">
+<meta property="og:site_name" content="leiyu">
+<meta property="og:description" content="版本说明：ruby 1.9.3，mongodb 2.4.6 准备工作ruby安装mongo驱动1gem install mongo 连接/创建数据库1client = Mongo::Client.new([127.0.0.1:27107], :database =&amp;gt; &apos;mydb&apos;) 删除数据库1client.database.drop CRUD操作创建集合1artists = client[">
+<meta property="og:updated_time" content="2017-12-23T08:14:58.488Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mongodb ruby driver">
+<meta name="twitter:description" content="版本说明：ruby 1.9.3，mongodb 2.4.6 准备工作ruby安装mongo驱动1gem install mongo 连接/创建数据库1client = Mongo::Client.new([127.0.0.1:27107], :database =&amp;gt; &apos;mydb&apos;) 删除数据库1client.database.drop CRUD操作创建集合1artists = client[">
+  
+    <link rel="alternate" href="/atom.xml" title="leiyu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">leiyu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ruby-mongodb-md" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/23/ruby-mongodb-md/" class="article-date">
+  <time datetime="2015-08-23T08:26:46.000Z" itemprop="datePublished">2015-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mongodb ruby driver
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>版本说明：ruby 1.9.3，mongodb 2.4.6</p>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>ruby安装mongo驱动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install mongo</span><br></pre></td></tr></table></figure></p>
+<p>连接/创建数据库<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client = Mongo::Client.new([<span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span><span class="symbol">:</span><span class="number">27107</span>], <span class="symbol">:database</span> =&gt; <span class="string">'mydb'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>删除数据库<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.database.drop</span><br></pre></td></tr></table></figure></p>
+<h4 id="CRUD操作"><a href="#CRUD操作" class="headerlink" title="CRUD操作"></a>CRUD操作</h4><h5 id="创建集合"><a href="#创建集合" class="headerlink" title="创建集合"></a>创建集合</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artists = client[<span class="symbol">:artists</span>]</span><br></pre></td></tr></table></figure>
+<p>创建固定集合<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artists = client[<span class="symbol">:artists</span>, <span class="symbol">:capped</span> =&gt; <span class="literal">true</span>, <span class="symbol">:size</span> =&gt; <span class="number">1024</span>]</span><br></pre></td></tr></table></figure></p>
+<p>删除集合<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artists.drop()</span><br></pre></td></tr></table></figure></p>
+<h5 id="insert——插入"><a href="#insert——插入" class="headerlink" title="insert——插入"></a>insert——插入</h5><p>插入单个文档<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = client[<span class="symbol">:artists</span>].insert_one(&#123;<span class="symbol">:name</span> =&gt; <span class="string">'Mongo'</span>&#125;)</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>插入多个文档<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">result = client[<span class="symbol">:artists</span>].insert_many([</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="symbol">:name</span> =&gt; <span class="string">'NoSQL'</span>,</span><br><span class="line">		<span class="symbol">:name</span> =&gt; <span class="string">'SQL'</span></span><br><span class="line">	&#125;</span><br><span class="line">])</span><br><span class="line">puts result.n <span class="comment">#=&gt; 输出文档个数</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="query——查询"><a href="#query——查询" class="headerlink" title="query——查询"></a>query——查询</h5><p>查询name取值为SQL的文档，并输出其id值<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">client[<span class="symbol">:artists</span>].find(<span class="symbol">:name</span> =&gt; <span class="string">'SQL'</span>).each <span class="keyword">do</span> <span class="params">|doc|</span></span><br><span class="line">	puts doc[<span class="string">'_id'</span>]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>查询可以配合skip()、limit()函数控制查询方式及返回的结果<br>如跳过前10个文档开始查询，返回的查询结果限制在10条内<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doc = client[<span class="symbol">:artists</span>].find(<span class="symbol">:name</span> =&gt; <span class="string">'SQL'</span>).skip(<span class="number">10</span>).limit(<span class="number">10</span>)</span><br></pre></td></tr></table></figure></p>
+<p>返回与查询匹配的文档数<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puts client[<span class="symbol">:artists</span>].find(<span class="symbol">:name</span> =&gt; <span class="string">'SQL'</span>).count</span><br></pre></td></tr></table></figure></p>
+<p>查询某个字段出现过的值<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client[<span class="symbol">:artists</span>].find.distinct(<span class="symbol">:name</span>)</span><br></pre></td></tr></table></figure></p>
+<h5 id="update——更新"><a href="#update——更新" class="headerlink" title="update——更新"></a>update——更新</h5><p>更新单个文档<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = client[<span class="symbol">:artists</span>].find(<span class="symbol">:name</span> =&gt; <span class="string">'SQL'</span>).update_one(<span class="string">"$in"</span> =&gt; &#123;<span class="symbol">:age</span> =&gt; <span class="number">20</span>&#125;)</span><br><span class="line">puts result.n <span class="comment">#=&gt; return 1 更新了一个文档</span></span><br></pre></td></tr></table></figure></p>
+<p>更新多个文档<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = client[<span class="symbol">:artists</span>].find(<span class="symbol">:name</span> =&gt; <span class="string">'SQL'</span>).update_many(<span class="string">"$in"</span> =&gt; &#123;<span class="symbol">:age</span> =&gt; <span class="number">20</span>&#125;)</span><br><span class="line">puts result.n <span class="comment">#=&gt; return n 更新了所有与查询匹配文档</span></span><br></pre></td></tr></table></figure></p>
+<p>查找并更新单个文档<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = client[<span class="symbol">:artists</span>].find(<span class="symbol">:name</span> =&gt; <span class="string">'SQL'</span>).find_one_and_replace(<span class="symbol">:language</span> =&gt; <span class="string">'mongo'</span>)</span><br><span class="line"><span class="comment">#=&gt; 更新后，文档中只有_id、language两个字段</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = client[<span class="symbol">:artists</span>].find(<span class="symbol">:name</span> =&gt; <span class="string">'SQL'</span>).find_one_and_replace(<span class="string">'$set'</span> =&gt; &#123;<span class="symbol">:name</span> =&gt;<span class="string">'Jose'</span>&#125;)</span><br><span class="line"><span class="comment">#=&gt; 更新后，文档中原有字段不变，新插入一个name字段</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">artists.find(<span class="symbol">:name</span> =&gt; <span class="string">'José James'</span>).find_one_and_delete </span><br><span class="line"><span class="comment">#=&gt; 删除一个文档</span></span><br></pre></td></tr></table></figure>
+<h5 id="remove——删除"><a href="#remove——删除" class="headerlink" title="remove——删除"></a>remove——删除</h5><p>删除单个文档<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = artists.find(<span class="symbol">:name</span> =&gt; <span class="string">'SQL'</span>).delete_one</span><br><span class="line">result.n <span class="comment">#=&gt;return 1</span></span><br></pre></td></tr></table></figure></p>
+<p>删除多个文档<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = artists.find(<span class="symbol">:name</span> =&gt; <span class="string">'Björk'</span>).delete_many</span><br><span class="line">result.n <span class="comment">#=&gt; return n</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="Index——索引"><a href="#Index——索引" class="headerlink" title="Index——索引"></a>Index——索引</h4><p>创建单个索引<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index = client[<span class="symbol">:artists</span>].indexes.create_one(&#123; <span class="symbol">:name</span> =&gt; <span class="number">1</span> &#125;, <span class="symbol">:unique</span> =&gt; <span class="literal">true</span>)</span><br></pre></td></tr></table></figure></p>
+<h5 id="创建多个索引"><a href="#创建多个索引" class="headerlink" title="创建多个索引"></a>创建多个索引</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">index = client[<span class="symbol">:artists</span>].indexes.create_many(</span><br><span class="line">[</span><br><span class="line">	&#123; </span><br><span class="line">		<span class="symbol">:key</span> =&gt; &#123;<span class="symbol">:name</span> =&gt; <span class="number">1</span>&#125; , <span class="symbol">:unique</span> =&gt; <span class="literal">true</span></span><br><span class="line">	&#125;,</span><br><span class="line">	&#123; </span><br><span class="line">		<span class="symbol">:key</span> =&gt; &#123;<span class="symbol">:ages</span> =&gt; <span class="number">1</span>&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h5 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">client[<span class="symbol">:artists</span>].indexes.drop_one(<span class="string">'name_1'</span>) <span class="comment">#=&gt; 删除名称为 name_1的索引</span></span><br><span class="line">client[<span class="symbol">:artists</span>].indexes.drop_all <span class="comment">#=&gt;  删除集合中所有索引</span></span><br></pre></td></tr></table></figure>
+<h5 id="遍历索引"><a href="#遍历索引" class="headerlink" title="遍历索引"></a>遍历索引</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">client[<span class="symbol">:artists</span>].indexes.each <span class="keyword">do</span> <span class="params">|index|</span></span><br><span class="line">  puts index</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/08/23/ruby-mongodb-md/" data-id="cjbj3elj4000j1vjx3qx5c4fh" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mongodb/">Mongodb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ruby/">ruby</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/08/29/DDcat-css-md/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          CSS 绘制叮当猫
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/08/22/mongodb-01-md/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">初识Mongodb</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Canvas/">Canvas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chord-Layout/">Chord Layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cvs/">Cvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/D3-js/">D3.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-visual/">Data visual</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Journal/">Journal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongodb/">Mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NOSQL/">NOSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/R/">R</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sass/">Sass</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 13.33px;">CSS</a> <a href="/tags/Canvas/" style="font-size: 10px;">Canvas</a> <a href="/tags/Chord-Layout/" style="font-size: 10px;">Chord Layout</a> <a href="/tags/Cvs/" style="font-size: 10px;">Cvs</a> <a href="/tags/D3-js/" style="font-size: 20px;">D3.js</a> <a href="/tags/Data-visual/" style="font-size: 10px;">Data visual</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTML5/" style="font-size: 10px;">HTML5</a> <a href="/tags/Javascript/" style="font-size: 16.67px;">Javascript</a> <a href="/tags/Journal/" style="font-size: 10px;">Journal</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mongodb/" style="font-size: 13.33px;">Mongodb</a> <a href="/tags/NOSQL/" style="font-size: 10px;">NOSQL</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/Sass/" style="font-size: 13.33px;">Sass</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/26/scope-js-02/">重识javascript中的函数表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/22/R-01/">R笔记（一）Ｒ语言基础</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/13/sass-01/">Sass学习笔记(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/01/scope-js-01-md/">javascript中的函数作用域</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 leiyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

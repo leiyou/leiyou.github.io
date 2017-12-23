@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>D3学习笔记之scale对象 | leiyu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="scale是D3.js中提供的一个对象，通过该对象可以将一个输入域映射到合适的输出范围，输入域和输出范围都是可以自己设置的，默认的输入域和输出范围都是[0, 1];举个例子：若输入域是[100, 500]输出范围是[10, 350]，则输入值100映射到比例尺上的值就是10，300映射的则是180,500对应的就是比例尺的最大值350. 当我们想要表现非常大的数值时，比如每个月的销售额，第一个月是">
+<meta name="keywords" content="D3.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D3学习笔记之scale对象">
+<meta property="og:url" content="http://yoursite.com/2015/07/16/scale-d3-js/index.html">
+<meta property="og:site_name" content="leiyu">
+<meta property="og:description" content="scale是D3.js中提供的一个对象，通过该对象可以将一个输入域映射到合适的输出范围，输入域和输出范围都是可以自己设置的，默认的输入域和输出范围都是[0, 1];举个例子：若输入域是[100, 500]输出范围是[10, 350]，则输入值100映射到比例尺上的值就是10，300映射的则是180,500对应的就是比例尺的最大值350. 当我们想要表现非常大的数值时，比如每个月的销售额，第一个月是">
+<meta property="og:updated_time" content="2017-12-23T08:14:58.488Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="D3学习笔记之scale对象">
+<meta name="twitter:description" content="scale是D3.js中提供的一个对象，通过该对象可以将一个输入域映射到合适的输出范围，输入域和输出范围都是可以自己设置的，默认的输入域和输出范围都是[0, 1];举个例子：若输入域是[100, 500]输出范围是[10, 350]，则输入值100映射到比例尺上的值就是10，300映射的则是180,500对应的就是比例尺的最大值350. 当我们想要表现非常大的数值时，比如每个月的销售额，第一个月是">
+  
+    <link rel="alternate" href="/atom.xml" title="leiyu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">leiyu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-scale-d3-js" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/07/16/scale-d3-js/" class="article-date">
+  <time datetime="2015-07-16T12:21:18.000Z" itemprop="datePublished">2015-07-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      D3学习笔记之scale对象
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>scale是D3.js中提供的一个对象，通过该对象可以将一个输入域映射到合适的输<br>出范围，输入域和输出范围都是可以自己设置的，默认的输入域和输出范围都是<br>[0, 1];举个例子：若输入域是[100, 500]输出范围是[10, 350]，则输入值100映<br>射到比例尺上的值就是10，300映射的则是180,500对应的就是比例尺的最大值350.</p>
+<p>当我们想要表现非常大的数值时，比如每个月的销售额，第一个月是200，第二个<br>月是500，我们可以将每个数值对应相应的条形图的高度，然而如果后面的销售额<br>越来越大时，还是用原来的方法，将数值对应相应的高度，显然是不可行的。我们<br>需要找到一种更灵活的转换方法，能将输入的值转化为合适的输出值。而scale对象<br>正好提供了这些方法。</p>
+<p>D3提供了好几个比例尺方法，这里主要介绍下线性（linear）比例尺；</p>
+<h4 id="生成一个比例尺"><a href="#生成一个比例尺" class="headerlink" title="生成一个比例尺"></a>生成一个比例尺</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scale = d3.scale.linear();</span><br></pre></td></tr></table></figure>
+<p>这样就生成了一个比例尺，此时的设置的是默认的输入域和输出范围[0, 1],可以测<br>试一下，<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scale(<span class="number">0.5</span>); <span class="comment">// 0.5</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="设置输入域"><a href="#设置输入域" class="headerlink" title="设置输入域"></a>设置输入域</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scale.domain([<span class="number">100</span>, <span class="number">500</span>]);</span><br></pre></td></tr></table></figure>
+<p>参考d3.js的API，其中有描述domain()接受一个数值数组参数，数值的个数须是两个或<br>两个以上（输入域和输出范围的数值个数须保持一致），如果数组中的元素不是数值类<br>型时，将会在scale对象被调用时转为数值类型(Number);</p>
+<p>对于输入域中包含三个数值的情况，API中提供了一个参考示例，代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> color = d3.scale.linear()</span><br><span class="line">	    .domain([<span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">	    .range([<span class="string">"red"</span>, <span class="string">"white"</span>, <span class="string">"green"</span>]);</span><br></pre></td></tr></table></figure>
+<p>这里我测试了下三个输入值对应的输出值，分别是红、白、绿对应的十六进制颜色值；<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(color(<span class="number">-1</span>));	<span class="comment">//#ff0000</span></span><br><span class="line"><span class="built_in">console</span>.log(color(<span class="number">0</span>));  <span class="comment">//#ffffff</span></span><br><span class="line"><span class="built_in">console</span>.log(color(<span class="number">1</span>));  <span class="comment">//#008000</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>也就是说[-1, 0]映射到的是红色(#ff0000)到白色(#ffffff)的颜色范围，而[0, 1]映射到<br>的是白色(#ffffff)到绿色(#008000)范围内的颜色。这样也就相当于定义了两个量化尺度，<br>因此输入域有多个值情况，适用于有多个量化尺度的情况；</p>
+<h4 id="设置输出范围"><a href="#设置输出范围" class="headerlink" title="设置输出范围"></a>设置输出范围</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scale.range([<span class="number">10</span>, <span class="number">350</span>]);</span><br></pre></td></tr></table></figure>
+<p>range()接受一个数组参数，参数中的元素不一定是数值类型，但数组中的元素个数必须<br>和输入域中参数数组中的数值个数匹配；</p>
+<p>经过上面三个步骤就完成了一个完整的比例尺的生成，当然上面三个步骤可写的更简洁些，<br>如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scale = d3.scale</span><br><span class="line">	  .linear()</span><br><span class="line">	  .domain([<span class="number">100</span>, <span class="number">500</span>])</span><br><span class="line">	  .range([<span class="number">10</span>, <span class="number">350</span>]);</span><br></pre></td></tr></table></figure></p>
+<h4 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h4><p>d3.scale.linear()还有几个非常方便的方法</p>
+<h6 id="nice"><a href="#nice" class="headerlink" title="nice()"></a>nice()</h6><p>调用该方法可以取得range()范围内最接近的整数值，比如值域为[0.200015, 0.99552245]<br>会被优化为[0.2, 1];</p>
+<h5 id="rangeRound"><a href="#rangeRound" class="headerlink" title="rangeRound()"></a>rangeRound()</h5><p>用rangeRound()代替range()后，比例尺所有的输出值都会舍入到最接近的整数值；</p>
+<h5 id="clamp"><a href="#clamp" class="headerlink" title="clamp()"></a>clamp()</h5><p>默认情况下，比例尺可以返回指定范围外的值；也就是说当输入一个输入域外的值，比例尺<br>也会返会一个值域外的值，而调用clamp(true)后，则可强制所有的输出值都在指定范围内；<br>当有超出范围的值时，会取到指定范围上最接近的值；</p>
+<p>可以这样调用以上方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scale = d3.scale</span><br><span class="line">	  .linear()</span><br><span class="line">	  .domain([<span class="number">100</span>, <span class="number">500</span>])</span><br><span class="line">	  .range([<span class="number">10</span>, <span class="number">350</span>])</span><br><span class="line">	  .nice();</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/07/16/scale-d3-js/" data-id="cjbj3elj8000l1vjxfvfm5uge" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/D3-js/">D3.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/07/21/chord-layout-D3-js/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          D3学习笔记之弦图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/07/16/update-date-d3-js/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">D3更新和删除元素</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Canvas/">Canvas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chord-Layout/">Chord Layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cvs/">Cvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/D3-js/">D3.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-visual/">Data visual</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Journal/">Journal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongodb/">Mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NOSQL/">NOSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/R/">R</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sass/">Sass</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 13.33px;">CSS</a> <a href="/tags/Canvas/" style="font-size: 10px;">Canvas</a> <a href="/tags/Chord-Layout/" style="font-size: 10px;">Chord Layout</a> <a href="/tags/Cvs/" style="font-size: 10px;">Cvs</a> <a href="/tags/D3-js/" style="font-size: 20px;">D3.js</a> <a href="/tags/Data-visual/" style="font-size: 10px;">Data visual</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTML5/" style="font-size: 10px;">HTML5</a> <a href="/tags/Javascript/" style="font-size: 16.67px;">Javascript</a> <a href="/tags/Journal/" style="font-size: 10px;">Journal</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mongodb/" style="font-size: 13.33px;">Mongodb</a> <a href="/tags/NOSQL/" style="font-size: 10px;">NOSQL</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/Sass/" style="font-size: 13.33px;">Sass</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/26/scope-js-02/">重识javascript中的函数表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/22/R-01/">R笔记（一）Ｒ语言基础</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/13/sass-01/">Sass学习笔记(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/01/scope-js-01-md/">javascript中的函数作用域</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 leiyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

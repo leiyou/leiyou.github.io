@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>D3更新和删除元素 | leiyu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="D3通过data()方法很容易的实现数据的绑定，那么当我们绘制好svg元素后，如果数据发生了变化，比如新增了一个数据元素或是删除了一个数据值，此时需要更新svg元素来表现数据的变化。 以下图为例，点击左边的按钮svg的右边会新增一矩形，点击右边的按钮时svg中則会从右边移除一矩形。这 里可以看具体效果  简单分析下触发点击事件时，数据所发生的变化。这个例子中数据保存在dataset数组中，初始时包">
+<meta name="keywords" content="D3.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D3更新和删除元素">
+<meta property="og:url" content="http://yoursite.com/2015/07/16/update-date-d3-js/index.html">
+<meta property="og:site_name" content="leiyu">
+<meta property="og:description" content="D3通过data()方法很容易的实现数据的绑定，那么当我们绘制好svg元素后，如果数据发生了变化，比如新增了一个数据元素或是删除了一个数据值，此时需要更新svg元素来表现数据的变化。 以下图为例，点击左边的按钮svg的右边会新增一矩形，点击右边的按钮时svg中則会从右边移除一矩形。这 里可以看具体效果  简单分析下触发点击事件时，数据所发生的变化。这个例子中数据保存在dataset数组中，初始时包">
+<meta property="og:image" content="http://yoursite.com/images/study/update-d3.png">
+<meta property="og:image" content="http://yoursite.com/images/study/20150816-01.jpg">
+<meta property="og:image" content="http://yoursite.com/images/study/20150816-02.jpg">
+<meta property="og:image" content="http://yoursite.com/images/study/update-1.png">
+<meta property="og:image" content="http://yoursite.com/images/study/2015-08-16-03.jpg">
+<meta property="og:image" content="http://yoursite.com/images/study/2015-08-16-05.jpg">
+<meta property="og:image" content="http://yoursite.com/images/study/2015-08-16-06.jpg">
+<meta property="og:image" content="http://yoursite.com/images/study/2015-08-16-07.jpg">
+<meta property="og:updated_time" content="2017-12-23T08:14:58.488Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="D3更新和删除元素">
+<meta name="twitter:description" content="D3通过data()方法很容易的实现数据的绑定，那么当我们绘制好svg元素后，如果数据发生了变化，比如新增了一个数据元素或是删除了一个数据值，此时需要更新svg元素来表现数据的变化。 以下图为例，点击左边的按钮svg的右边会新增一矩形，点击右边的按钮时svg中則会从右边移除一矩形。这 里可以看具体效果  简单分析下触发点击事件时，数据所发生的变化。这个例子中数据保存在dataset数组中，初始时包">
+<meta name="twitter:image" content="http://yoursite.com/images/study/update-d3.png">
+  
+    <link rel="alternate" href="/atom.xml" title="leiyu" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">leiyu</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-update-date-d3-js" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/07/16/update-date-d3-js/" class="article-date">
+  <time datetime="2015-07-16T12:20:58.000Z" itemprop="datePublished">2015-07-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      D3更新和删除元素
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>D3通过data()方法很容易的实现数据的绑定，那么当我们绘制好svg元素后，如果数据发生了变化，<br>比如新增了一个数据元素或是删除了一个数据值，此时需要更新svg元素来表现数据的变化。</p>
+<p>以下图为例，点击左边的按钮svg的右边会新增一矩形，点击右边的按钮时svg中則会从右边移除一矩形。<a href="http://codepen.io/yourlei/pen/WvyVaO" target="_blank" rel="noopener"><strong>这 里</strong></a>可以看具体效果</p>
+<p><img src="/images/study/update-d3.png" alt="update"></p>
+<p>简单分析下触发点击事件时，数据所发生的变化。这个例子中数据保存在dataset数组中，初始时包<br>含二十个元素，点击左边按钮，会向数组中添加一个元素，数组长度加一;相对应的点击右边按钮时<br>，会从数组中删除一个元素，数组长度减一;</p>
+<h4 id="数据更新——enter"><a href="#数据更新——enter" class="headerlink" title="数据更新——enter()"></a>数据更新——enter()</h4><p>先来看看如何实现新增一个矩形。看到这你可能会想，这很简单嘛，重新绑定修改后的值，再覆盖<br>原始值对svg元素的绑定就可以啦！没错，这个方法是可行的，但这种方法比较适合所有值都发生改<br>变，且数据集的长度不变的情况。显然我们的这个例子不属于这种情况，因为我们的数据并没有全<br>部发生改变，而且这个例子中数据集的长度发生了变化;这里我们可以这样想，有没有方法可以实现<br>只对新加入的数据集绑定DOM元素呢，答案是有的。其实这方法很常见，没错，就是它——enter()<br>.关于这个方法，D3的API上是这样介绍的，为不存在当前DOM元素中的数据找到占位符节点，同时<br>该方法需要通过搭配append，insert, select，call方法来实例化enter返回的占位符节点。<br><a id="more"></a><br>看下面的例子，</p>
+<h5 id="原始数据"><a href="#原始数据" class="headerlink" title="原始数据"></a>原始数据</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d3.select(<span class="string">"body"</span>).selectAll(<span class="string">"div"</span>)</span><br><span class="line">  .data([<span class="number">4</span>, <span class="number">8</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">23</span>, <span class="number">42</span>])</span><br><span class="line">  .enter().append(<span class="string">"div"</span>)</span><br><span class="line">  .text(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d; &#125;);</span><br></pre></td></tr></table></figure>
+<p>DOM的结构：<img src="/images/study/20150816-01.jpg"></p>
+<h5 id="更新数据后"><a href="#更新数据后" class="headerlink" title="更新数据后"></a>更新数据后</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> div = d3.select(<span class="string">"body"</span>).selectAll(<span class="string">"div"</span>)</span><br><span class="line">    .data([<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">16</span>, <span class="number">32</span>], <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d; &#125;);</span><br><span class="line"></span><br><span class="line">    div.enter().append(<span class="string">"div"</span>)</span><br><span class="line">        .text(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d; &#125;);</span><br></pre></td></tr></table></figure>
+<p>DOM的结构：<img src="/images/study/20150816-02.jpg"><br>对比两次DOM的结构可知，enter()实际仅仅对[1,2,32]这三个新数据添加了占位符节点，旧数据<br>的DOM结构并没有改变;理解了enter方法后，我们很容易便可实现一开始讲的那个例子中单击按钮<br>添加一个矩形的效果了。这里是点击事件的回调函数的部分代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">21</span> + <span class="number">5</span>); </span><br><span class="line"><span class="keyword">var</span> rect = svg.selectAll(<span class="string">'rect'</span>)</span><br><span class="line">	.data(dataset)</span><br><span class="line"></span><br><span class="line"><span class="comment">//console.log( svg.selectAll('rect').data(dataset).enter());</span></span><br><span class="line"></span><br><span class="line">dataset.push(value);</span><br><span class="line">dataset.push(value);</span><br><span class="line"></span><br><span class="line"><span class="comment">//console.log( svg.selectAll('rect').data(dataset).enter());</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	rect.enter()</span><br><span class="line">	.append(<span class="string">'tect'</span>)</span><br><span class="line">	.attr(&#123;</span><br><span class="line">		......</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/study/update-1.png" alt="update"></p>
+<p>代码中打印了数据更新前后调用ernter()返回的结果，看上图的红色箭头处，这里多了两个对象，<br>其实就是为新加入的数据添加的占位符节点;</p>
+<h4 id="删除数据——exit"><a href="#删除数据——exit" class="headerlink" title="删除数据——exit()"></a>删除数据——exit()</h4><p>API中说这个方法专门用于更新选择，返回更新后不存在于新数据集中的数据元素。还是以enter<br>中讲的那个例子，先看下更新前后的两组数据：[4, 8, 15, 16, 23, 42],[1, 2, 4, 8, 16, 32],很明显[15,23,4]没有出现在新数据中，因此真正的更新，应该将这三个数据元素从DOM中移除;那么怎么<br>移除呢？看下面的代码：</p>
+<h5 id="移除过期的数据"><a href="#移除过期的数据" class="headerlink" title="移除过期的数据"></a>移除过期的数据</h5> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> div = d3.select(<span class="string">"body"</span>)</span><br><span class="line">.selectAll(<span class="string">"div"</span>)</span><br><span class="line">.data([<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">16</span>, <span class="number">32</span>], <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d; &#125;);</span><br><span class="line"></span><br><span class="line">div.enter().append(<span class="string">"div"</span>)</span><br><span class="line">.text(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d; &#125;);	</span><br><span class="line"></span><br><span class="line">div.exit().remove();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(div.exit());</span><br></pre></td></tr></table></figure>
+<p>下图打印了exit的返回值，三个div元素，前面的2,4,5是它们在数据集数组[4, 8, 15, 16, 23, 42]<br>中的索引,也就是15, 23, 42这三个值;这里要注意是的移除这三个元素并不是exit实现,而是remove<br>方法做到的,exit的作用是找到这三个元素，然后再交给remove，让它去从DOM中删除元素。</p>
+<p><img src="/images/study/2015-08-16-03.jpg"><br><img src="/images/study/2015-08-16-05.jpg"><br><img src="/images/study/2015-08-16-06.jpg"><br><img src="/images/study/2015-08-16-07.jpg"></p>
+<p>继续看实现点击按钮，移除一个矩形的效果的例子，思路很简单，当点击事件发生时，我们从数据集中移除<br>一个元素，在选择所有的rect元素绑定data后，调用exit、remove就可以了</p>
+<pre><code class="javascript">
+dataset.shift();<span class="comment">//shitf方法实现从数组头部开始移除一个元素</span>
+
+<span class="comment">//更新DOM选择集</span>
+<span class="keyword">var</span> bars = svg.selectAll(<span class="string">'rect'</span>)
+    .data(dataset);
+
+<span class="comment">//从DOM中删除过期的数据元素</span>
+bars.exit()
+    .transition()
+    .duration(<span class="number">500</span>)
+    .attr({
+        <span class="string">'x'</span>: width
+    })
+    .remove();
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/07/16/update-date-d3-js/" data-id="cjbj3eljg000v1vjxv61v0yb6" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/D3-js/">D3.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/07/16/scale-d3-js/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          D3学习笔记之scale对象
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/07/01/datatype-js/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Javascript中的数据类型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Canvas/">Canvas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chord-Layout/">Chord Layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cvs/">Cvs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/D3-js/">D3.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-visual/">Data visual</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Journal/">Journal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongodb/">Mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NOSQL/">NOSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/R/">R</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sass/">Sass</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CSS/" style="font-size: 13.33px;">CSS</a> <a href="/tags/Canvas/" style="font-size: 10px;">Canvas</a> <a href="/tags/Chord-Layout/" style="font-size: 10px;">Chord Layout</a> <a href="/tags/Cvs/" style="font-size: 10px;">Cvs</a> <a href="/tags/D3-js/" style="font-size: 20px;">D3.js</a> <a href="/tags/Data-visual/" style="font-size: 10px;">Data visual</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HTML5/" style="font-size: 10px;">HTML5</a> <a href="/tags/Javascript/" style="font-size: 16.67px;">Javascript</a> <a href="/tags/Journal/" style="font-size: 10px;">Journal</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mongodb/" style="font-size: 13.33px;">Mongodb</a> <a href="/tags/NOSQL/" style="font-size: 10px;">NOSQL</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/Sass/" style="font-size: 13.33px;">Sass</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/26/scope-js-02/">重识javascript中的函数表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/22/R-01/">R笔记（一）Ｒ语言基础</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/13/sass-01/">Sass学习笔记(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/01/scope-js-01-md/">javascript中的函数作用域</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 leiyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="个人博客"><title>GreenPlum客户端认证 | leiyu</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">GreenPlum客户端认证</h1><a id="logo" href="/.">leiyu</a><p class="description">个人博客</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">GreenPlum客户端认证</h1><div class="post-meta">Aug 1, 2016</div><div class="post-content"><p>客户端连接master节点时，gp会验证连接的客户端ip，需要在<strong>pg_hba.conf</strong>配置文件中添加相应的记录才能连接到数据库。<br>添加记录的格式如下：</p>
+<pre>
+hostssl    DATABASE  USER  CIDR-ADDRESS  METHOD  [OPTIONS]
+
+hostnossl  DATABASE  USER  CIDR-ADDRESS  METHOD  [OPTIONS]
+</pre>
+说明：
+
+  - 第一列指连接方式，客户端使用的是host方式
+  - 第二列指要连接的数据库名，可以是指定数据库或是所有数据库(all)
+  - 第三列指连接该数据库的用户
+  - 第四列，**local方式**指的是验证方式，其他三种方式指的是ip地址段
+  - 第五列，**local方式**是可选参数，其他三列指认证方式
+
+ > method可选的值有：
+
+ 1. reject （拒绝连接）
+ 2. trust （不需要验证）
+ 3. md5
+ 4. password （未加密密码）
+ 5. ident （local 用户连接）
+
+如：
+<pre>
+local    all         gpadmin         ident
+host     all         gpadmin         127.0.0.1/28    trust
+host     all         gpadmin         172.17.0.220/32       trust
+host     all         gpadmin         172.17.0.221/32       trust
+</pre>
+
+<p>添加记录后，以gpadmin用户执行<strong>gpstop -u</strong>重新加载配置配置.</p>
+<p><em>注：添加记录只需在master节点的pg_hba.conf文件中修改即可</em></p>
+</div><div class="tags"><a href="/tags/Greenplum/">Greenplum</a></div><div class="post-nav"><a class="pre" href="/2016/08/11/linux-LVM扩容笔记/">linux LVM扩容笔记</a><a class="next" href="/2015/10/26/scope-js-02/">重识javascript中的函数表达式</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="blog.youlei.me"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/R/" style="font-size: 15px;">R</a> <a href="/tags/Sass/" style="font-size: 15px;">Sass</a> <a href="/tags/HTML5/" style="font-size: 15px;">HTML5</a> <a href="/tags/Canvas/" style="font-size: 15px;">Canvas</a> <a href="/tags/D3-js/" style="font-size: 15px;">D3.js</a> <a href="/tags/Data-visual/" style="font-size: 15px;">Data visual</a> <a href="/tags/Javascript/" style="font-size: 15px;">Javascript</a> <a href="/tags/CSS/" style="font-size: 15px;">CSS</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Cvs/" style="font-size: 15px;">Cvs</a> <a href="/tags/Journal/" style="font-size: 15px;">Journal</a> <a href="/tags/Mongodb/" style="font-size: 15px;">Mongodb</a> <a href="/tags/NOSQL/" style="font-size: 15px;">NOSQL</a> <a href="/tags/ruby/" style="font-size: 15px;">ruby</a> <a href="/tags/Greenplum/" style="font-size: 15px;">Greenplum</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/01/JavaScript-Array中的原型方法/">JavaScript Array中的原型方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/11/mysql忘记root用户密码/">mysql忘记root用户密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/11/Greenplum激活standby节点/">Greenplum激活standby节点</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/Greenplum外部表加载数据/">Greenplum外部表加载数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/16/git-多账户使用/">git 多账户使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/linux-LVM扩容笔记/">linux LVM扩容笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/01/GreenPlum客户端认证/">GreenPlum客户端认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/10/26/scope-js-02/">重识javascript中的函数表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/10/22/R-01/">R笔记（一）Ｒ语言基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/10/13/sass-01/">Sass学习笔记(一)</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">leiyu.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

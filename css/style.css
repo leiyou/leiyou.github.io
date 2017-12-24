@@ -68,6 +68,7 @@ div {
       overflow: hidden; }
     #header .site-name #logo {
       font: bold 38px/1.12 "Times New Roman", Georgia, Times, sans-serif;
+      font-style: italic;
       color: #555; }
       #header .site-name #logo span, #header .site-name #logo:hover {
         color: #777; }
@@ -216,7 +217,7 @@ div {
       color: #444; }
   .post .post-content {
     clear: left;
-    font-size: 15px;
+    font-size: 1.2em;
     line-height: 1.77;
     color: #444;
     padding-top: 15px;
@@ -260,7 +261,9 @@ div {
       max-width: 100%;
       padding: 0.5em 0;
       margin: auto;
-      display: block; }
+      display: block;
+      border: 5px solid #CCC;
+      border-radius: 8px 8px; }
     .post .post-content ul, .post .post-content ol {
       border-radius: 3px;
       margin: 1em 0; }
@@ -342,8 +345,12 @@ div {
   .post-archive h2 {
     margin: 0;
     font: bold 25px / 1.1 "ff-tisa-web-pro", Cambria, "Times New Roman", Georgia, Times, sans-serif; }
+  .post-archive li {
+    padding: 2px 0px;
+    border-bottom: 1px dashed #E5E5E5; }
   .post-archive .date {
-    padding-right: .7em; }
+    padding-right: .7em;
+    letter-spacing: 1px; }
 
 /* for archive page ends*/
 /* middle*/
